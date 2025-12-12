@@ -13,7 +13,7 @@ void handle_relocation_type(PBYTE* section_mapping, SIZE_T index, PCOFF_SYM coff
             _inf("Readin offsetValue : 0x%llX", longoffset_value);
             longoffset_value += (UINT64)funcptr;
             _inf("Modified offsetValue : 0x%llX Base Address: %p", longoffset_value, funcptr);
-            RtlMoveMemory(destination, &offset_value, sizeof(UINT64));
+            RtlMoveMemory(destination, &longoffset_value, sizeof(UINT64));
             
             break;
         /* This is Type == 3 relocation code */
@@ -280,4 +280,3 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
     _inf("Exiting run_coff");
     return 0;
 }
-
