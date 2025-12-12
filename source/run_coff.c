@@ -293,5 +293,6 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
     }
 
     _inf("Exiting run_coff");
+    
     return 0;
 }

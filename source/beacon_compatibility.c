@@ -384,16 +384,18 @@ BOOL toWideChar(char* src, wchar_t* dst, int max) {
     return MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, src, -1, dst, max / sizeof(wchar_t));
 }
 
-char* BeaconGetOutputData(int *outsize) {
+PCHAR BeaconGetOutputData(PINT outsize) {
     if (outsize == NULL) {
         return NULL;
     }
 
-    char* outdata = beacon_compatibility_output;
-    *outsize = beacon_compatibility_size;
+    PCHAR outdata = beacon_compatibility_output;
+    *outsize      = beacon_compatibility_size;
+
     beacon_compatibility_output = NULL;
-    beacon_compatibility_size = 0;
+    beacon_compatibility_size   = 0;
     beacon_compatibility_offset = 0;
+    
     return outdata;
 }
 
