@@ -21,4 +21,4 @@ debug64:
 release64:
 	@echo "[*] Compiling x64 release executable"
 	mkdir -p build
-	$(CC) $(INCLUDE) $(SRC) $(CFLAGS) $(DEFS) -o build/release.exe
+	$(CC) $(INCLUDE) $(SRC) $(DEBUGSRC) $(CFLAGS) $(DEFS) -o build/release.exe
