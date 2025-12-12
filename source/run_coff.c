@@ -136,15 +136,21 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
     section_mapping = (PBYTE*)mcalloc(sizeof(PBYTE) * (coff_header->number_of_sections + 1));
     section_size    = (PINT32)mcalloc(sizeof(INT32) * (coff_header->number_of_sections + 1));
 
+    #if _DEBUG==1
     print_coff_header(coff_header);
     _log_no_format("\n");
+    #endif
+    
 
     /* Handle the allocation and copying of the sections we're going to use
      * for right now I'm just VirtualAlloc'ing memory, this can be changed to
      * other methods, but leaving that up to the person implementing it. */
     for (SIZE_T i = 0; i < coff_header->number_of_sections; i++) {
         coff_sect_ptr = (PCOFF_SECT)(coff_data + sizeof(COFF_FILE_HEADER) + (sizeof(COFF_SECT) * i));
+        
+        #if _DEBUG==1
         print_coff_section(coff_sect_ptr);
+        #endif
 
         relocation_count += coff_sect_ptr->number_of_relocations;
 
