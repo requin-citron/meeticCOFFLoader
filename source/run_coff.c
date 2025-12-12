@@ -146,15 +146,30 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
         coff_sect_ptr = (PCOFF_SECT)(coff_data + sizeof(COFF_FILE_HEADER) + (sizeof(COFF_SECT) * i));
         print_coff_section(coff_sect_ptr);
 
-        relocation_count  += coff_sect_ptr->number_of_relocations;
-        section_mapping[i] = (PBYTE)VirtualAlloc(NULL, coff_sect_ptr->size_of_raw_data, MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, PAGE_EXECUTE_READWRITE);
-        section_size[i]    = coff_sect_ptr->size_of_raw_data;
+        relocation_count += coff_sect_ptr->number_of_relocations;
 
-        if(coff_sect_ptr->size_of_raw_data > 0) {
+        SIZE_T allocation_size = coff_sect_ptr->size_of_raw_data;
+        if (coff_sect_ptr->virtual_size > allocation_size) {
+            allocation_size = coff_sect_ptr->virtual_size;
+        }
+
+        if (allocation_size == 0) {
+            allocation_size = coff_sect_ptr->size_of_raw_data;
+        }
+
+        section_mapping[i] = (PBYTE)VirtualAlloc(NULL, allocation_size, MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, PAGE_EXECUTE_READWRITE);
+        section_size[i]    = (INT32)allocation_size;
+
+        BOOL has_raw_data = coff_sect_ptr->pointer_to_raw_data != 0 && coff_sect_ptr->size_of_raw_data > 0;
+        if(has_raw_data) {
             printf("Copying 0x%lX bytes to section %llu\n", coff_sect_ptr->size_of_raw_data, i);
             RtlMoveMemory(section_mapping[i], coff_data + coff_sect_ptr->pointer_to_raw_data, coff_sect_ptr->size_of_raw_data);
-        }else{
-            RtlZeroMemory(section_mapping[i], coff_sect_ptr->virtual_size);
+        }
+
+        SIZE_T zero_offset = has_raw_data ? coff_sect_ptr->size_of_raw_data : 0;
+        if (allocation_size > zero_offset) {
+            /* BSS/uninitialized sections provide no raw data; ensure they start cleared */
+            RtlZeroMemory(section_mapping[i] + zero_offset, allocation_size - zero_offset);
         }
 
         _log_no_format("\n");
