@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
         out_data = BeaconGetOutputData(&out_data_size);
         if (out_data != NULL) {
 
-            _inf("Outdata Below:\n%s", out_data);
+            printf("Outdata Below:\n%s", out_data);
             mcfree(out_data);
         }
 

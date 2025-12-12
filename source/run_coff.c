@@ -255,7 +255,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
         }
     }
 
-    for(WORD i = 0; i < coff_header->number_of_sections; i++) {
+    for(DWORD i = 0; i < coff_header->number_of_symbols; i++) {
         if(CompareStringA(
             LOCALE_INVARIANT,
             0,
