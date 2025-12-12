@@ -22,10 +22,15 @@
 
 #else
 
+#define _log_no_format(format, ...)
 #define _log(level, format, ...)
 #define _dbg(format, ...)
 #define _err(format, ...)
 #define _wrn(format, ...)
 #define _inf(format, ...)
+
+#define _log_no_newline(level, format, ...) 
+#define _inf_no_newline(format, ...) 
+
 
 #endif
