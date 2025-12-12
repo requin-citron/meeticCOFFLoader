@@ -11,6 +11,10 @@
 
  /* Structures as is in beacon.h */
 extern PCHAR internal_functions[30][2];
+extern PCHAR beacon_compatibility_output;
+extern INT   beacon_compatibility_size;
+extern INT   beacon_compatibility_offset;
+
 typedef struct {
     PCHAR original;  /* the original buffer [so we can free it] */
     PCHAR buffer;    /* current pointer into our buffer */

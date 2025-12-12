@@ -77,6 +77,20 @@ PVOID process_symbol(PCHAR symbolstring) {
     return functionaddress;
 }
 
+PCHAR beacon_get_output_data(int *out_size) {
+    if (out_size == NULL) {
+        return NULL;
+    }
+
+    PCHAR outdata = beacon_compatibility_output;
+    *out_size     = beacon_compatibility_size;
+    beacon_compatibility_output = NULL;
+    beacon_compatibility_size   = 0;
+    beacon_compatibility_offset = 0;
+
+    return outdata;
+}
+
 #if _DEBUG==1
 
 void print_coff_header(PCOFF_FILE_HEADER header) {

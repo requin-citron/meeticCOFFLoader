@@ -24,6 +24,9 @@
 #define X64PATH "sysnative"
 #endif
 
+PCHAR beacon_compatibility_output = NULL;
+INT   beacon_compatibility_size   = 0;
+INT   beacon_compatibility_offset = 0;
 
  /* Data Parsing */
 PCHAR internal_functions[30][2] = {
@@ -68,10 +71,6 @@ UINT32 swap_endianess(UINT32 indata) {
     }
     return outint;
 }
-
-PCHAR beacon_compatibility_output = NULL;
-INT   beacon_compatibility_size   = 0;
-INT   beacon_compatibility_offset = 0;
 
 void BeaconDataParse(datap* parser, char* buffer, int size) {
     if (parser == NULL || buffer == NULL) {

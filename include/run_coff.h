@@ -7,6 +7,8 @@
 #include "debug.h"
 #include "utils.h"
 
+#define ENTRY_POINT_NAME "go"
+
 /* AMD64 Specific types */
 #define IMAGE_REL_AMD64_ABSOLUTE    0x0000
 #define IMAGE_REL_AMD64_ADDR64      0x0001
