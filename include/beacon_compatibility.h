@@ -8,6 +8,7 @@
  */
 #ifndef BEACON_COMPATIBILITY_H_
 #include <windows.h>
+#include "debug.h"
 
  /* Structures as is in beacon.h */
 extern PCHAR internal_functions[30][2];

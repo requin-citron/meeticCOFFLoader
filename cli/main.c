@@ -31,10 +31,11 @@ int main(int argc, char *argv[]) {
 
     if (toto == 0) {
         _inf("Ran/parsed the coff");
-        PCHAR out_data = BeaconGetOutputData(&out_data_size);
+        out_data = BeaconGetOutputData(&out_data_size);
         if (out_data != NULL) {
 
             _inf("Outdata Below:\n%s", out_data);
+            mcfree(out_data);
         }
 
     }
