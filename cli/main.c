@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 
         if (toto == 0) {
             _inf("Ran/parsed the coff");
-            out_data = BeaconGetOutputData(&out_data_size);
+            out_data = beacon_get_output_data(&out_data_size);
             if (out_data != NULL) {
 
                     printf("Outdata Below:\n%s", out_data);

@@ -5,7 +5,7 @@ CC          := clang -target x86_64-w64-mingw32
 BUILD       := build
 
 INCLUDE     := -Iinclude -Icli
-SRC         := source/*.c
+SRC         := source/*.c source/beacon_functions/*.c
 DEBUGSRC    := cli/*.c
 
 all: debug release
