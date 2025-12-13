@@ -151,7 +151,7 @@ void BeaconFormatAlloc(formatp* format, int maxsz) {
         return;
     }
 
-    format->original = calloc(maxsz, 1);
+    format->original = mcalloc(maxsz);
     format->buffer = format->original;
     format->length = 0;
     format->size = maxsz;
@@ -263,10 +263,13 @@ void BeaconPrintf(int type, char* fmt, ...) {
     va_start(args, fmt);
     length = vsnprintf(NULL, 0, fmt, args);
     va_end(args);
-    tempptr = (PCHAR)mcrealloc(beacon_compatibility_output, beacon_compatibility_size + length + 1);
-    if (tempptr == NULL) {
-        return;
+    if(beacon_compatibility_output == NULL) {
+        tempptr = (PCHAR)mcalloc(length + 1);
     }
+    else {
+        tempptr = (PCHAR)mcrealloc(beacon_compatibility_output, beacon_compatibility_size + length + 1);
+    }   
+
     beacon_compatibility_output = tempptr;
     memset(beacon_compatibility_output + beacon_compatibility_offset, 0, length + 1);
     va_start(args, fmt);
