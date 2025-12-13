@@ -40,5 +40,8 @@ int main(int argc, char *argv[]) {
 
     }
 
+    mcfree(coff_data);
+    mcfree(param_data);
+
     return 0;
 }

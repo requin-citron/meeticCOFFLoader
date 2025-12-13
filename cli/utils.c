@@ -13,7 +13,7 @@ PBYTE ReadFileToBuffer(PCHAR filePath, PDWORD fileSize) {
         return NULL;
     }
 
-    PBYTE buffer = (PBYTE)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, size);
+    PBYTE buffer = (PBYTE)mcalloc(size);
     if (!buffer) {
         CloseHandle(hFile);
         return NULL;
@@ -21,7 +21,7 @@ PBYTE ReadFileToBuffer(PCHAR filePath, PDWORD fileSize) {
 
     DWORD bytesRead;
     if (!ReadFile(hFile, buffer, size, &bytesRead, NULL) || bytesRead != size) {
-        HeapFree(GetProcessHeap(), 0, buffer);
+        mcfree(buffer);
         CloseHandle(hFile);
         return NULL;
     }
@@ -38,7 +38,7 @@ PCHAR unhexlify(PCHAR value, PDWORD out_size) {
     }
 
     size_t finalLen = len / 2;
-    PCHAR result = (PCHAR)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, finalLen + 1);
+    PCHAR result = (PCHAR)mcalloc(finalLen + 1);
     if (!result) {
         return NULL; // Memory allocation failed
     }
