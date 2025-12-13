@@ -61,7 +61,7 @@ BOOL coff_symbol_is_external(PCOFF_SYM);
 BOOL coff_symbol_is_defined(PCOFF_SYM);
 PVOID process_symbol(PCHAR);
 
-#if _DEBUG==1
+#if _DEBUG_COFFLOADER==1
 
 void print_coff_header(PCOFF_FILE_HEADER);
 void print_coff_section(PCOFF_SECT);

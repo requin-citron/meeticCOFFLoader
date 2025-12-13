@@ -16,7 +16,7 @@ release: release64
 debug64:
 	@echo "[*] Compiling x64 debug executable"
 	mkdir -p build
-	$(CC) $(INCLUDE) $(SRC) $(DEBUGSRC) $(DEBUGCFLAGS) $(CFLAGS) $(DEFS) -D _DEBUG=1 -o build/debug.exe
+	$(CC) $(INCLUDE) $(SRC) $(DEBUGSRC) $(DEBUGCFLAGS) $(CFLAGS) $(DEFS) -D _DEBUG_COFFLOADER=1 -o build/debug.exe
 
 release64:
 	@echo "[*] Compiling x64 release executable"
@@ -39,7 +39,7 @@ TEST_SRCS    := test/test_main.c \
                 source/beacon_functions/beacon_process.c \
                 source/beacon_functions/beacon_token.c \
                 source/coff_loader.c
-TEST_CFLAGS  := -std=c11 -D _DEBUG=1
+TEST_CFLAGS  := -std=c11 -D _DEBUG_COFFLOADER=1
 
 .PHONY: test
 test: $(TEST_BIN)

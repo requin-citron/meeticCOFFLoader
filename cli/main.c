@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
         int toto = run_coff(coff_data, coff_size, param_data, param_size);
 
         if (toto == 0) {
-            _inf("Ran/parsed the coff");
+            _inf_coffloader("Ran/parsed the coff");
             out_data = beacon_get_output_data(&out_data_size);
             if (out_data != NULL) {
 

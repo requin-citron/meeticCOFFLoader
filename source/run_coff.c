@@ -10,100 +10,100 @@ void handle_relocation_type(PBYTE* section_mapping, SIZE_T index, PCOFF_SYM coff
         /* Type == 1 relocation is the 64-bit VA of the relocation target */
         case IMAGE_REL_AMD64_ADDR64:
             RtlMoveMemory(&longoffset_value, destination, sizeof(UINT64));
-            _inf("Readin offsetValue : 0x%llX", longoffset_value);
+            _inf_coffloader("Readin offsetValue : 0x%llX", longoffset_value);
             longoffset_value += (UINT64)funcptr;
-            _inf("Modified offsetValue : 0x%llX Base Address: %p", longoffset_value, funcptr);
+            _inf_coffloader("Modified offsetValue : 0x%llX Base Address: %p", longoffset_value, funcptr);
             RtlMoveMemory(destination, &longoffset_value, sizeof(UINT64));
             
             break;
         /* This is Type == 3 relocation code */
         case IMAGE_REL_AMD64_ADDR32NB:
             RtlMoveMemory(&offset_value, destination, sizeof(UINT32));
-            _inf("Readin OffsetValue : 0x%0X", offset_value);
+            _inf_coffloader("Readin OffsetValue : 0x%0X", offset_value);
             if (((char*)(section_mapping[coff_sym_ptr[coff_reloc_ptr->symbol_table_index].section_number - 1] + offset_value) - (char*)(destination + 4)) > 0xffffffff) {
-                _inf("Relocations > 4 gigs away, exiting");
+                _inf_coffloader("Relocations > 4 gigs away, exiting");
             }
             offset_value = ((char*)(section_mapping[coff_sym_ptr[coff_reloc_ptr->symbol_table_index].section_number - 1] + offset_value) - (char*)(destination + 4));
             offset_value += coff_sym_ptr[coff_reloc_ptr->symbol_table_index].value;
-            _inf("Setting 0x%p to OffsetValue: 0x%X", destination, offset_value);
+            _inf_coffloader("Setting 0x%p to OffsetValue: 0x%X", destination, offset_value);
             RtlMoveMemory(destination, &offset_value, sizeof(UINT32));
         
             break;
         /* This is Type == 4 relocation code, this is either a relocation to a global or imported symbol */
         case IMAGE_REL_AMD64_REL32:
             RtlMoveMemory(&offset_value, section_mapping[index] + coff_reloc_ptr->virtual_address, sizeof(UINT32));
-            _inf("Readin offset value: 0x%X", offset_value);
+            _inf_coffloader("Readin offset value: 0x%X", offset_value);
             if (llabs((long long)funcptr - (long long)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4)) > UINT_MAX) {
-                _inf("Relocations > 4 gigs away, exiting");
+                _inf_coffloader("Relocations > 4 gigs away, exiting");
                 break;
             }
             offset_value += ((size_t)funcptr - ((size_t)section_mapping[index] + coff_reloc_ptr->virtual_address + 4));
-            _inf("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
+            _inf_coffloader("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
             RtlMoveMemory(section_mapping[index] + coff_reloc_ptr->virtual_address, &offset_value, sizeof(UINT32));
 
             break;
         case IMAGE_REL_AMD64_REL32_1:
             RtlMoveMemory(&offset_value, section_mapping[index] + coff_reloc_ptr->virtual_address, sizeof(UINT32));
-            _inf("Readin offset value: 0x%X", offset_value);
+            _inf_coffloader("Readin offset value: 0x%X", offset_value);
             if (llabs((long long)funcptr - (long long)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 1)) > UINT_MAX) {
-                _inf("Relocations > 4 gigs away, exiting");
+                _inf_coffloader("Relocations > 4 gigs away, exiting");
                 break;
             }
             offset_value += (size_t)funcptr - ((size_t)section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 1);
-            _inf("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
+            _inf_coffloader("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
             RtlMoveMemory(section_mapping[index] + coff_reloc_ptr->virtual_address, &offset_value, sizeof(UINT32));
 
             break;
         case IMAGE_REL_AMD64_REL32_2:
             RtlMoveMemory(&offset_value, section_mapping[index] + coff_reloc_ptr->virtual_address, sizeof(UINT32));
-            _inf("Readin offset value: 0x%X", offset_value);
+            _inf_coffloader("Readin offset value: 0x%X", offset_value);
             if (llabs((long long)funcptr - (long long)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 2)) > UINT_MAX) {
-                _inf("Relocations > 4 gigs away, exiting");
+                _inf_coffloader("Relocations > 4 gigs away, exiting");
                 break;
             }
             offset_value += (size_t)funcptr - ((size_t)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 2));
-            _inf("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
+            _inf_coffloader("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
             RtlMoveMemory(section_mapping[index] + coff_reloc_ptr->virtual_address, &offset_value, sizeof(UINT32));
             
             break;
         case IMAGE_REL_AMD64_REL32_3:
             RtlMoveMemory(&offset_value, section_mapping[index] + coff_reloc_ptr->virtual_address, sizeof(UINT32));
-            _inf("Readin offset value: 0x%X", offset_value);
+            _inf_coffloader("Readin offset value: 0x%X", offset_value);
             if (llabs((long long)funcptr - (long long)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 3)) > UINT_MAX) {
-                _inf("Relocations > 4 gigs away, exiting");
+                _inf_coffloader("Relocations > 4 gigs away, exiting");
                 break;
             }
             offset_value += (size_t)funcptr - ((size_t)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 3));
-            _inf("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
+            _inf_coffloader("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
             RtlMoveMemory(section_mapping[index] + coff_reloc_ptr->virtual_address, &offset_value, sizeof(UINT32));
 
             break;
         case IMAGE_REL_AMD64_REL32_4:
             RtlMoveMemory(&offset_value, section_mapping[index] + coff_reloc_ptr->virtual_address, sizeof(UINT32));
-            _inf("Readin offset value: 0x%X", offset_value);
+            _inf_coffloader("Readin offset value: 0x%X", offset_value);
             if (llabs((long long)funcptr - (long long)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 4)) > UINT_MAX) {
-                _inf("Relocations > 4 gigs away, exiting");
+                _inf_coffloader("Relocations > 4 gigs away, exiting");
                 break;
             }
             offset_value += (size_t)funcptr - ((size_t)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 4));
-            _inf("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
+            _inf_coffloader("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
             RtlMoveMemory(section_mapping[index] + coff_reloc_ptr->virtual_address, &offset_value, sizeof(UINT32));
 
             break;
         case IMAGE_REL_AMD64_REL32_5:
             RtlMoveMemory(&offset_value, section_mapping[index] + coff_reloc_ptr->virtual_address, sizeof(UINT32));
-            _inf("Readin offset value: 0x%X", offset_value);
+            _inf_coffloader("Readin offset value: 0x%X", offset_value);
             if (llabs((long long)funcptr - (long long)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 5)) > UINT_MAX) {
-                _inf("Relocations > 4 gigs away, exiting");
+                _inf_coffloader("Relocations > 4 gigs away, exiting");
                 break;
             }
             offset_value += (size_t)funcptr - ((size_t)(section_mapping[index] + coff_reloc_ptr->virtual_address + 4 + 5));
-            _inf("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
+            _inf_coffloader("Setting 0x%p to relative address: 0x%X", section_mapping[index] + coff_reloc_ptr->virtual_address, offset_value);
             RtlMoveMemory(section_mapping[index] + coff_reloc_ptr->virtual_address, &offset_value, sizeof(UINT32));
 
             break;
         default:
-            _inf("Relocation type 0x%04X not implemented yet!", coff_reloc_ptr->type);
+            _inf_coffloader("Relocation type 0x%04X not implemented yet!", coff_reloc_ptr->type);
             break;
     }
 
@@ -136,9 +136,9 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
     section_mapping = (PBYTE*)mcalloc(sizeof(PBYTE) * (coff_header->number_of_sections + 1));
     section_size    = (PINT32)mcalloc(sizeof(INT32) * (coff_header->number_of_sections + 1));
 
-    #if _DEBUG==1
+    #if _DEBUG_COFFLOADER==1
     print_coff_header(coff_header);
-    _log_no_format("\n");
+    _log_no_format_coffloader("\n");
     #endif
     
 
@@ -148,7 +148,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
     for (SIZE_T i = 0; i < coff_header->number_of_sections; i++) {
         coff_sect_ptr = (PCOFF_SECT)(coff_data + sizeof(COFF_FILE_HEADER) + (sizeof(COFF_SECT) * i));
         
-        #if _DEBUG==1
+        #if _DEBUG_COFFLOADER==1
         print_coff_section(coff_sect_ptr);
         #endif
 
@@ -168,7 +168,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
 
         BOOL has_raw_data = coff_sect_ptr->pointer_to_raw_data != 0 && coff_sect_ptr->size_of_raw_data > 0;
         if(has_raw_data) {
-            _inf("Copying 0x%lX bytes to section %llu", coff_sect_ptr->size_of_raw_data, i);
+            _inf_coffloader("Copying 0x%lX bytes to section %llu", coff_sect_ptr->size_of_raw_data, i);
             RtlMoveMemory(section_mapping[i], coff_data + coff_sect_ptr->pointer_to_raw_data, coff_sect_ptr->size_of_raw_data);
         }
 
@@ -178,7 +178,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
             RtlZeroMemory(section_mapping[i] + zero_offset, allocation_size - zero_offset);
         }
 
-        _log_no_format("\n");
+        _log_no_format_coffloader("\n");
     }
 
     /* Allocate and setup the GOT for functions, same here as above. */
@@ -190,11 +190,11 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
         coff_sect_ptr  = (PCOFF_SECT)(coff_data + sizeof(COFF_FILE_HEADER) + (sizeof(COFF_SECT) * i));
         coff_reloc_ptr = (PCOFF_RELOC)(coff_data + coff_sect_ptr->pointer_to_relocations);
 
-        _inf("Processing %u relocations for section %s", coff_sect_ptr->number_of_relocations, coff_sect_ptr->name);
+        _inf_coffloader("Processing %u relocations for section %s", coff_sect_ptr->number_of_relocations, coff_sect_ptr->name);
         for(SIZE_T j = 0; j < coff_sect_ptr->number_of_relocations; j++) {
-            _inf("Virtual Address : 0x%08lX", coff_reloc_ptr->virtual_address);
-            _inf("Symbol Index    : 0x%02lX", coff_reloc_ptr->symbol_table_index);
-            _inf("Type            : 0x%04X", coff_reloc_ptr->type);
+            _inf_coffloader("Virtual Address : 0x%08lX", coff_reloc_ptr->virtual_address);
+            _inf_coffloader("Symbol Index    : 0x%02lX", coff_reloc_ptr->symbol_table_index);
+            _inf_coffloader("Type            : 0x%04X", coff_reloc_ptr->type);
 
             /* Check if the symbol name is a long symbol name */
             if(coff_sym_ptr[coff_reloc_ptr->symbol_table_index].first.value[0] == 0 ) {
@@ -218,9 +218,9 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
                 }
             }
             
-            _inf("sym_name_ptr   : %p", symbol_name);
-            _inf("sym_name       : %s", symbol_name);
-            _inf("section_number : %d", coff_sym_ptr[coff_reloc_ptr->symbol_table_index].section_number);
+            _inf_coffloader("sym_name_ptr   : %p", symbol_name);
+            _inf_coffloader("sym_name       : %s", symbol_name);
+            _inf_coffloader("section_number : %d", coff_sym_ptr[coff_reloc_ptr->symbol_table_index].section_number);
             
             /* Check if the target symbol is a local symbol or an external undefined symbol
              * and resolve it */
@@ -235,7 +235,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
                 /* Map the imported symbol address to the local import table */
                 function_mapping[function_mapping_count] = funcptr_location;
 
-                _inf("Resolved external symbol %s to address 0x%p", symbol_name, funcptr_location);
+                _inf_coffloader("Resolved external symbol %s to address 0x%p", symbol_name, funcptr_location);
 
                 /* Get the address of the imported symbol mapped in the local import 
                  * table for the relocation target */
@@ -244,7 +244,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
                 /* Increment the number of mapped imported functions */
                 function_mapping_count += 1;
             } else {
-                _wrn("Unhandled symbol type!");
+                _inf_coffloader("Unhandled symbol type!");
             }
 
             handle_relocation_type(
@@ -257,7 +257,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
             
             coff_reloc_ptr += 1;
 
-            _log_no_format("\n");
+            _log_no_format_coffloader("\n");
         }
     }
 
@@ -270,14 +270,14 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
             ENTRY_POINT_NAME,
             lstrlenA(ENTRY_POINT_NAME)
         ) == CSTR_EQUAL) {
-            _inf("Found entrypoint symbol %s in section %d at offset 0x%lX", ENTRY_POINT_NAME, coff_sym_ptr[i].section_number, coff_sym_ptr[i].value);
+            _inf_coffloader("Found entrypoint symbol %s in section %d at offset 0x%lX", ENTRY_POINT_NAME, coff_sym_ptr[i].section_number, coff_sym_ptr[i].value);
             entrypoint = (VOID(*)(PCHAR, ULONG))(section_mapping[coff_sym_ptr[i].section_number - 1] + coff_sym_ptr[i].value);
 
             entrypoint((PCHAR)param_data, param_size);
         }
     }
 
-    _inf("back from entrypoint");
+    _inf_coffloader("back from entrypoint");
 
     // cleanup
 
@@ -298,7 +298,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
         VirtualFree(function_mapping, 0, MEM_RELEASE);
     }
 
-    _inf("Exiting run_coff");
+    _inf_coffloader("Exiting run_coff");
     
     return 0;
 }

@@ -10,7 +10,7 @@ BOOL beacon_use_token(HANDLE token) {
 
 VOID beacon_revert_token(VOID) {
     if (!RevertToSelf()) 
-        _inf("RevertToSelf Failed!\n");
+        _inf_coffloader("RevertToSelf Failed!\n");
     
     return;
 }
