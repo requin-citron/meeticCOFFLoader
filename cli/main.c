@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     }
 
 
-    for(int i = 0; i < 30; i++) {
+    for(int i = 0; i < 1; i++) {
         int toto = run_coff(coff_data, coff_size, param_data, param_size);
 
         if (toto == 0) {
