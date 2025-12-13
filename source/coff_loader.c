@@ -69,7 +69,11 @@ PVOID process_symbol(PCHAR symbolstring) {
         _inf("Function : %s", localfunc);
 
         /* Resolve the symbols here, and set the functionpointervalue */
-        llHandle = LoadLibraryA(locallib);
+        llHandle = GetModuleHandleA(locallib);
+        //Make sure to load the library if not already loaded
+        if( llHandle == NULL ) {
+            llHandle = LoadLibraryA(locallib);
+        }
         _inf("Handle      : 0x%p", llHandle);
         functionaddress = GetProcAddress(llHandle, localfunc);
         _inf("ProcAddress : 0x%p", functionaddress);

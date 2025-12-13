@@ -168,7 +168,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
 
         BOOL has_raw_data = coff_sect_ptr->pointer_to_raw_data != 0 && coff_sect_ptr->size_of_raw_data > 0;
         if(has_raw_data) {
-            printf("Copying 0x%lX bytes to section %llu\n", coff_sect_ptr->size_of_raw_data, i);
+            _inf("Copying 0x%lX bytes to section %llu", coff_sect_ptr->size_of_raw_data, i);
             RtlMoveMemory(section_mapping[i], coff_data + coff_sect_ptr->pointer_to_raw_data, coff_sect_ptr->size_of_raw_data);
         }
 
@@ -186,12 +186,12 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
     function_mapping = (PVOID*)VirtualAlloc(NULL, relocation_count*8, MEM_COMMIT | MEM_RESERVE | MEM_TOP_DOWN, PAGE_EXECUTE_READWRITE);
 
     /* Start parsing the relocations, and *hopefully* handle them correctly. */
-    for(WORD i = 0; i < coff_header->number_of_sections; i++) {
+    for(SIZE_T i = 0; i < coff_header->number_of_sections; i++) {
         coff_sect_ptr  = (PCOFF_SECT)(coff_data + sizeof(COFF_FILE_HEADER) + (sizeof(COFF_SECT) * i));
         coff_reloc_ptr = (PCOFF_RELOC)(coff_data + coff_sect_ptr->pointer_to_relocations);
 
         _inf("Processing %u relocations for section %s", coff_sect_ptr->number_of_relocations, coff_sect_ptr->name);
-        for(WORD j = 0; j < coff_sect_ptr->number_of_relocations; j++) {
+        for(SIZE_T j = 0; j < coff_sect_ptr->number_of_relocations; j++) {
             _inf("Virtual Address : 0x%08lX", coff_reloc_ptr->virtual_address);
             _inf("Symbol Index    : 0x%02lX", coff_reloc_ptr->symbol_table_index);
             _inf("Type            : 0x%04X", coff_reloc_ptr->type);
@@ -261,7 +261,7 @@ INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_siz
         }
     }
 
-    for(DWORD i = 0; i < coff_header->number_of_symbols; i++) {
+    for(SIZE_T i = 0; i < coff_header->number_of_symbols; i++) {
         if(CompareStringA(
             LOCALE_INVARIANT,
             0,

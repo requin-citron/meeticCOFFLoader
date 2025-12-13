@@ -8,7 +8,12 @@
  */
 #ifndef BEACON_COMPATIBILITY_H_
 #include <windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdarg.h>
 #include "debug.h"
+#include "utils.h"
 
  /* Structures as is in beacon.h */
 extern PCHAR internal_functions[30][2];
@@ -51,7 +56,7 @@ void    BeaconFormatInt(formatp * format, int value);
 
 
 void   BeaconPrintf(int type, char * fmt, ...);
-void   BeaconOutput(int type, char * data, int len);
+void   BeaconOutput(int type, char * data, SIZE_T len);
 
 /* Token Functions */
 BOOL   BeaconUseToken(HANDLE token);

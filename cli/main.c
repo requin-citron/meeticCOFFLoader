@@ -27,17 +27,19 @@ int main(int argc, char *argv[]) {
     }
 
 
-    int toto = run_coff(coff_data, coff_size, param_data, param_size);
+    for(int i = 0; i < 30; i++) {
+        int toto = run_coff(coff_data, coff_size, param_data, param_size);
 
-    if (toto == 0) {
-        _inf("Ran/parsed the coff");
-        out_data = BeaconGetOutputData(&out_data_size);
-        if (out_data != NULL) {
+        if (toto == 0) {
+            _inf("Ran/parsed the coff");
+            out_data = BeaconGetOutputData(&out_data_size);
+            if (out_data != NULL) {
 
-            printf("Outdata Below:\n%s", out_data);
-            mcfree(out_data);
+                    printf("Outdata Below:\n%s", out_data);
+                    mcfree(out_data);
+            }
+
         }
-
     }
 
     mcfree(coff_data);

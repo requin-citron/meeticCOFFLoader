@@ -6,13 +6,7 @@
  *
  * Built off of the beacon.h file provided to build for CS.
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdarg.h>
 #ifdef _WIN32
-#include <windows.h>
-
 #include "beacon_compatibility.h"
 
 #define DEFAULTPROCESSNAME "rundll32.exe"
@@ -180,7 +174,7 @@ void BeaconFormatFree(formatp* format) {
         return;
     }
     if (format->original) {
-        free(format->original);
+        mcfree(format->original);
         format->original = NULL;
     }
     format->buffer = NULL;
@@ -260,7 +254,7 @@ void BeaconPrintf(int type, char* fmt, ...) {
 
     /* Change to maintain internal buffer, and return after done running. */
     int length = 0;
-    char* tempptr = NULL;
+    PCHAR tempptr = NULL;
     va_list args;
     va_start(args, fmt);
     vprintf(fmt, args);
@@ -269,7 +263,7 @@ void BeaconPrintf(int type, char* fmt, ...) {
     va_start(args, fmt);
     length = vsnprintf(NULL, 0, fmt, args);
     va_end(args);
-    tempptr = realloc(beacon_compatibility_output, beacon_compatibility_size + length + 1);
+    tempptr = (PCHAR)mcrealloc(beacon_compatibility_output, beacon_compatibility_size + length + 1);
     if (tempptr == NULL) {
         return;
     }
@@ -283,17 +277,21 @@ void BeaconPrintf(int type, char* fmt, ...) {
     return;
 }
 
-void BeaconOutput(int type, char* data, int len) {
+void BeaconOutput(int type, char* data, SIZE_T len) {
     if (data == NULL) {
         return;
     }
 
-    char* tempptr = NULL;
-    tempptr = realloc(beacon_compatibility_output, beacon_compatibility_size + len + 1);
-    beacon_compatibility_output = tempptr;
-    if (tempptr == NULL) {
-        return;
+    PCHAR tempptr = NULL;
+    if(beacon_compatibility_output == NULL) {
+        tempptr = (PCHAR)mcalloc(len + 1);
     }
+    else {
+        tempptr = (PCHAR)mcrealloc(beacon_compatibility_output, beacon_compatibility_size + len + 1);
+    }
+
+    beacon_compatibility_output = tempptr;
+
     memset(beacon_compatibility_output + beacon_compatibility_offset, 0, len + 1);
     memcpy(beacon_compatibility_output + beacon_compatibility_offset, data, len);
     beacon_compatibility_size += len;
