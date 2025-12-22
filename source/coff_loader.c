@@ -81,12 +81,12 @@ PVOID process_symbol(PCHAR symbolstring) {
     return functionaddress;
 }
 
-PCHAR beacon_get_output_data(int *out_size) {
+PBYTE beacon_get_output_data(int *out_size) {
     if (out_size == NULL) {
         return NULL;
     }
 
-    PCHAR outdata = beacon_compatibility_output;
+    PBYTE outdata = (PBYTE)beacon_compatibility_output;
     *out_size     = beacon_compatibility_size;
     beacon_compatibility_output = NULL;
     beacon_compatibility_size   = 0;

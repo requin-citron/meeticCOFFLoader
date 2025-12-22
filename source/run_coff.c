@@ -109,7 +109,7 @@ void handle_relocation_type(PBYTE* section_mapping, SIZE_T index, PCOFF_SYM coff
 
 }
 
-INT run_coff(PCHAR coff_data, DWORD coff_size, PCHAR param_data, DWORD param_size) {
+INT run_coff(PBYTE coff_data, DWORD coff_size, PBYTE param_data, DWORD param_size) {
     PCOFF_SECT coff_sect_ptr   = NULL;
     PCOFF_RELOC coff_reloc_ptr = NULL;
     PCHAR symbol_name          = NULL;

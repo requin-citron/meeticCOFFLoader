@@ -81,5 +81,5 @@ VOID   beacon_cleanup_process(PROCESS_INFORMATION * pInfo);
 BOOL   to_wide_char(PCHAR src, wchar_t * dst, INT max);
 UINT32 swap_endianess(UINT32 indata);
 
-PCHAR beacon_get_output_data(INT *outsize);
+PBYTE beacon_get_output_data(INT *outsize);
 #endif
