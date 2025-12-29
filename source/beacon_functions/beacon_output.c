@@ -85,12 +85,12 @@ VOID beacon_output(INT type, PCHAR data, SIZE_T len) {
             RtlMoveMemory(temp, beacon_compatibility_filecontent, beacon_compatibility_filesize);
             VirtualFree(beacon_compatibility_filecontent, 0, MEM_RELEASE);
             beacon_compatibility_filecontent = temp;
-            beacon_compatibility_allocsize = newsize;
+            beacon_compatibility_allocsize   = newsize;
 
-        }else{
-            RtlMoveMemory(beacon_compatibility_filecontent + beacon_compatibility_filesize, writable_data, writable_size);
-            beacon_compatibility_filesize += writable_size;
         }
+        
+        RtlMoveMemory(beacon_compatibility_filecontent + beacon_compatibility_filesize, writable_data, writable_size);
+        beacon_compatibility_filesize += writable_size;
 
         return;
     }else if(type == CALLBACK_FILE_CLOSE){
@@ -114,3 +114,4 @@ VOID beacon_output(INT type, PCHAR data, SIZE_T len) {
     beacon_compatibility_offset += len;
     return;
 }
+
