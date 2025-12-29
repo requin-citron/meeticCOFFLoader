@@ -13,10 +13,16 @@
 #include "utils.h"
 
 #define BEACON_FORMAT_BUFFER_SIZE 8192
+#define BEACON_FILE_CHUNK_SIZE   (100 * 1024 * 1024 ) // 100MB
+
 #define CALLBACK_OUTPUT      0x0
 #define CALLBACK_OUTPUT_OEM  0x1e
 #define CALLBACK_ERROR       0x0d
 #define CALLBACK_OUTPUT_UTF8 0x20
+
+#define CALLBACK_FILE       0x02
+#define CALLBACK_FILE_WRITE 0x08
+#define CALLBACK_FILE_CLOSE 0x09
 
 #define DEFAULTPROCESSNAME "rundll32.exe"
 #ifdef _WIN64
@@ -32,6 +38,9 @@ extern PCHAR internal_functions[30][2];
 extern PCHAR beacon_compatibility_output;
 extern INT   beacon_compatibility_size;
 extern INT   beacon_compatibility_offset;
+extern PBYTE beacon_compatibility_filecontent;
+extern SIZE_T beacon_compatibility_filesize;
+extern SIZE_T beacon_compatibility_allocsize;
 
 typedef struct {
     PCHAR original;  /* the original buffer [so we can free it] */

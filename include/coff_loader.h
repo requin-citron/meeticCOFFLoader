@@ -60,6 +60,8 @@ typedef struct coff_sym {
 BOOL coff_symbol_is_external(PCOFF_SYM);
 BOOL coff_symbol_is_defined(PCOFF_SYM);
 PVOID process_symbol(PCHAR);
+VOID beacon_get_file_data(PBYTE *, SIZE_T *);
+VOID beacon_free_file_data();
 
 #if _DEBUG_COFFLOADER==1
 

@@ -32,6 +32,11 @@ PBYTE ReadFileToBuffer(PCHAR filePath, PDWORD fileSize) {
 }
 
 PCHAR unhexlify(PCHAR value, PDWORD out_size) {
+
+    if (!value || !out_size) {
+        return NULL;
+    }
+
     size_t len = strlen(value);
     if (len % 2 != 0) {
         return NULL; // Invalid hex string

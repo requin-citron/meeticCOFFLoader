@@ -95,6 +95,27 @@ PBYTE beacon_get_output_data(int *out_size) {
     return outdata;
 }
 
+VOID beacon_get_file_data(PBYTE *filedata, SIZE_T *filesize) {
+    if (filedata == NULL || filesize == NULL) {
+        return;
+    }
+
+    *filedata = beacon_compatibility_filecontent;
+    *filesize = beacon_compatibility_filesize;
+    beacon_compatibility_filecontent = NULL;
+    beacon_compatibility_filesize   = 0;
+    beacon_compatibility_allocsize  = 0;
+}
+
+VOID beacon_free_file_data() {
+    if (beacon_compatibility_filecontent != NULL) {
+        VirtualFree(beacon_compatibility_filecontent, 0, MEM_RELEASE);
+        beacon_compatibility_filecontent = NULL;
+        beacon_compatibility_filesize   = 0;
+        beacon_compatibility_allocsize  = 0;
+    }
+}
+
 #if _DEBUG_COFFLOADER==1
 
 void print_coff_header(PCOFF_FILE_HEADER header) {

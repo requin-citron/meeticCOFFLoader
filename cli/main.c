@@ -6,12 +6,17 @@
 int main(int argc, char *argv[]) {
     PCHAR coff_data   = NULL;
     DWORD coff_size   = 0;
+
     PCHAR param_data  = NULL;
     DWORD param_size  = 0;
+
     PCHAR out_data    = NULL;
     INT out_data_size = 0;
 
-    if (argc < 3) {
+    PBYTE out_file       = NULL;
+    SIZE_T out_file_size = 0;
+
+    if (argc < 2) {
         printf("Usage: %s <file_path> param\n", argv[0]);
         return 1;
     }
@@ -21,9 +26,11 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    param_data = unhexlify(argv[2], &param_size);
-    if (!param_data) {
-        return 1;
+    if (argc >= 3) {
+        param_data = unhexlify(argv[2], &param_size);
+        if (!param_data) {
+            return 1;
+        }
     }
 
 
@@ -35,8 +42,20 @@ int main(int argc, char *argv[]) {
             out_data = beacon_get_output_data(&out_data_size);
             if (out_data != NULL) {
 
-                    printf("Outdata Below:\n%s", out_data);
+                    printf("Outdata Below:\n%s %d", out_data, out_data_size);
                     mcfree(out_data);
+            }
+
+            beacon_get_file_data(&out_file, &out_file_size);
+            if (out_file != NULL) {
+                    printf("Outfile Below: size %zu\n", out_file_size);
+                    
+                    // For demonstration, we write the output file to disk
+                    FILE *fp = fopen("output_file.bin", "wb");
+                    fwrite(out_file, 1, out_file_size, fp);
+                    fclose(fp);
+
+                    beacon_free_file_data();
             }
 
         }

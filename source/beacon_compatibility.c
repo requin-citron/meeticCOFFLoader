@@ -12,6 +12,10 @@ PCHAR beacon_compatibility_output = NULL;
 INT   beacon_compatibility_size   = 0;
 INT   beacon_compatibility_offset = 0;
 
+PBYTE beacon_compatibility_filecontent = NULL;
+SIZE_T beacon_compatibility_filesize   = 0;
+SIZE_T beacon_compatibility_allocsize  = 0;
+
  /* Data Parsing */
 PCHAR internal_functions[30][2] = {
     {(PCHAR)"BeaconDataParse",      (PCHAR)beacon_data_parse},
