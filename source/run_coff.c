@@ -21,10 +21,10 @@ void handle_relocation_type(PBYTE* section_mapping, SIZE_T index, PCOFF_SYM coff
         case IMAGE_REL_AMD64_ADDR32NB:
             RtlMoveMemory(&offset_value, destination, sizeof(UINT32));
             _inf_coffloader("Readin OffsetValue : 0x%0X", offset_value);
-            if (((char*)(section_mapping[coff_sym_ptr[coff_reloc_ptr->symbol_table_index].section_number - 1] + offset_value) - (char*)(destination + 4)) > 0xffffffff) {
+            if ((((PCHAR)section_mapping[coff_sym_ptr[coff_reloc_ptr->symbol_table_index].section_number - 1] + offset_value) - ((PCHAR)destination + 4)) > 0xffffffff) {
                 _inf_coffloader("Relocations > 4 gigs away, exiting");
             }
-            offset_value = ((char*)(section_mapping[coff_sym_ptr[coff_reloc_ptr->symbol_table_index].section_number - 1] + offset_value) - (char*)(destination + 4));
+            offset_value = (((PCHAR)section_mapping[coff_sym_ptr[coff_reloc_ptr->symbol_table_index].section_number - 1] + offset_value) - ((PCHAR)destination + 4));
             offset_value += coff_sym_ptr[coff_reloc_ptr->symbol_table_index].value;
             _inf_coffloader("Setting 0x%p to OffsetValue: 0x%X", destination, offset_value);
             RtlMoveMemory(destination, &offset_value, sizeof(UINT32));
@@ -200,7 +200,7 @@ INT run_coff(PBYTE coff_data, DWORD coff_size, PBYTE param_data, DWORD param_siz
             /* Check if the symbol name is a long symbol name */
             if(coff_sym_ptr[coff_reloc_ptr->symbol_table_index].first.value[0] == 0 ) {
                 /* Long symbol name from the string table */
-                symbol_name = ((char*)(coff_sym_ptr + coff_header->number_of_symbols))
+                symbol_name = ((PCHAR)(coff_sym_ptr + coff_header->number_of_symbols))
                     + coff_sym_ptr[coff_reloc_ptr->symbol_table_index].first.value[1];
             } else {
                 /* Short symbol name from the symbol table */

@@ -75,7 +75,7 @@ PVOID process_symbol(PCHAR symbolstring) {
             llHandle = LoadLibraryA(locallib);
         }
         _inf_coffloader("Handle      : 0x%p", llHandle);
-        functionaddress = GetProcAddress(llHandle, localfunc);
+        functionaddress = (PVOID)GetProcAddress(llHandle, localfunc);
         _inf_coffloader("ProcAddress : 0x%p", functionaddress);
     }
     return functionaddress;
