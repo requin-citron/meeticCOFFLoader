@@ -7,7 +7,7 @@ VOID beacon_format_alloc(formatp* format, INT maxsz) {
         return;
     }
 
-    format->original = mcalloc(maxsz);
+    format->original = (PCHAR)mcalloc(maxsz);
     format->buffer   = format->original;
     format->length   = 0;
     format->size     = maxsz;
