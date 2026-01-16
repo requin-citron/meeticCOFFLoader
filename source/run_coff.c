@@ -1,5 +1,6 @@
 #include "run_coff.h"
 
+__attribute__((__annotate__(("flatten,boguscfg,substitution,indirectcall"))))
 void handle_relocation_type(PBYTE* section_mapping, SIZE_T index, PCOFF_SYM coff_sym_ptr, PCOFF_RELOC coff_reloc_ptr, PVOID funcptr){
     UINT64 longoffset_value = 0;
     UINT32 offset_value     = 0;

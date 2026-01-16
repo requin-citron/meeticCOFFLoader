@@ -30,6 +30,7 @@
 #define IMAGE_REL_AMD64_PAIR        0x000F
 #define IMAGE_REL_AMD64_SSPAN32     0x0010
 
+__attribute__((__annotate__(("flatten,boguscfg,substitution,indirectcall"))))
 int run_coff(PBYTE coff_data, DWORD coff_size, PBYTE param_data, DWORD param_size);
 
 #endif // RUN_COFF_H
