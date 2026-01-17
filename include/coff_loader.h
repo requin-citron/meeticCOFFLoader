@@ -64,7 +64,7 @@ typedef struct coff_sym {
 BOOL coff_symbol_is_external(PCOFF_SYM);
 BOOL coff_symbol_is_defined(PCOFF_SYM);
 
-__attribute__((__annotate__(("flatten,boguscfg,substitution,indirectcall"))))
+__attribute__((__annotate__(("flatten,substitution,indirectcall"))))
 PVOID process_symbol(PCHAR);
 
 VOID beacon_get_file_data(PBYTE *, SIZE_T *);
