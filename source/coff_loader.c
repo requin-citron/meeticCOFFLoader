@@ -34,7 +34,7 @@ PVOID process_symbol(PCHAR symbolstring) {
         if(lstrcmpA(symbolstring, "__C_specific_handler") == 0)
         {
             localfunc = symbolstring;
-            return internal_functions[29][1];
+            return internal_functions[27][1];
         }
         else
         {
@@ -44,7 +44,7 @@ PVOID process_symbol(PCHAR symbolstring) {
         /* TODO: Get internal symbol here and set to functionaddress, then
          * return the pointer to the internal function*/
 
-        for (tempcounter = 0; tempcounter < 30; tempcounter++) {
+        for (tempcounter = 0; tempcounter < INTERNAL_FUNCTIONS_COUNT; tempcounter++) {
             if (internal_functions[tempcounter][0] != NULL) {
                 if (starts_with(localfunc, (char*)(internal_functions[tempcounter][0]))) {
                     functionaddress = (void*)internal_functions[tempcounter][1];

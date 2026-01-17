@@ -17,7 +17,7 @@ SIZE_T beacon_compatibility_filesize   = 0;
 SIZE_T beacon_compatibility_allocsize  = 0;
 
  /* Data Parsing */
-PCHAR internal_functions[30][2] = {
+PCHAR internal_functions[INTERNAL_FUNCTIONS_COUNT][2] = {
     {(PCHAR)"BeaconDataParse",      (PCHAR)beacon_data_parse},
     {(PCHAR)"BeaconDataInt",        (PCHAR)beacon_data_int},
     {(PCHAR)"BeaconDataShort",      (PCHAR)beacon_data_short},
