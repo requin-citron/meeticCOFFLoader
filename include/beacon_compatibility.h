@@ -33,7 +33,7 @@
 #define X64PATH "sysnative"
 #endif
 
-#define INTERNAL_FUNCTIONS_COUNT 27
+#define INTERNAL_FUNCTIONS_COUNT 28
 
  /* Structures as is in beacon.h */
 extern PCHAR internal_functions[INTERNAL_FUNCTIONS_COUNT][2];
