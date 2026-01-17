@@ -6,6 +6,10 @@
 #include "debug.h"
 #include "beacon_compatibility.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* These seem to be the same sizes across architectures, relocations are different though. Defined both sets of types. */
 // https://github.com/trustedsec/COFFLoader/blob/main/COFFLoader.h
 
@@ -71,6 +75,10 @@ VOID beacon_free_file_data();
 void print_coff_header(PCOFF_FILE_HEADER);
 void print_coff_section(PCOFF_SECT);
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif 

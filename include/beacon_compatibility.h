@@ -12,6 +12,10 @@
 #include "debug.h"
 #include "utils.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define BEACON_FORMAT_BUFFER_SIZE 8192
 #define BEACON_FILE_CHUNK_SIZE   (100 * 1024 * 1024 ) // 100MB
 
@@ -93,4 +97,9 @@ BOOL   to_wide_char(PCHAR src, wchar_t * dst, INT max);
 UINT32 swap_endianess(UINT32 indata);
 
 PBYTE beacon_get_output_data(INT *outsize);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif

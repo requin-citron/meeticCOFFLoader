@@ -7,6 +7,10 @@
 #include "debug.h"
 #include "utils.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define ENTRY_POINT_NAME "go"
 
 /* AMD64 Specific types */
@@ -32,5 +36,9 @@
 
 __attribute__((__annotate__(("flatten,boguscfg,substitution,indirectcall"))))
 int run_coff(PBYTE coff_data, DWORD coff_size, PBYTE param_data, DWORD param_size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // RUN_COFF_H
