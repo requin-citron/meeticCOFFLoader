@@ -1,7 +1,7 @@
 CFLAGS      := 
 DEBUGCFLAGS := -g -Og 
 
-CC          := /opt/Polaris-Obfuscator/src/build/bin/clang++ -target x86_64-w64-mingw32
+CC          := /opt/Polaris-Obfuscator/src/build/bin/clang -target x86_64-w64-mingw32
 BUILD       := build
 
 INCLUDE     := -Iinclude -Icli
